@@ -15,5 +15,5 @@ Clifford, D., & Stone, G. (2012). Variable Penalty Dynamic Time Warping Code for
 
 ---
 
-[Forked from David Clifford](https://github.com/david-clifford/regress),
+Forked from [David Clifford](https://github.com/david-clifford/VPdtw),
 but now maintained by [Ethan Bass](https://github.com/ethanbass).
