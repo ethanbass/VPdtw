@@ -2,8 +2,10 @@ Package: VPdtw
 Type: Package
 Title: Variable Penalty Dynamic Time Warping
 Version: 2.1-13
-Date: 2022-05-09
+Date: 2022-07-03
 Author: David Clifford, Glenn Stone
-Maintainer: David Clifford <David.Clifford+CRAN@gmail.com>
+Maintainer: Ethan Bass <ethanbass@gmail.com>
 Description: Variable Penalty Dynamic Time Warping for aligning GC-MS chromatograms to a master signal and more. With the appropriate penalty this method performs good alignment without altering the shape of peaks in GC-MS data.
 License: GPL-2 | file LICENSE
+URL: https://github.com/ethanbass/VPdtw/
+BugReports: https://github.com/ethanbass/VPdtw/issues
