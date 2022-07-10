@@ -1,9 +1,9 @@
-VPdtw <- function(reference,query,penalty=0,maxshift=50,Reference.type=c("random","median","mean","trimmed")) {
+VPdtw <- function(reference, query, penalty=0, maxshift=50,
+                  Reference.type=c("random", "median", "mean", "trimmed")) {
 
   ## We assume Sakoe Chiba DTW to allow for faster computation times
-  if(!is.numeric(maxshift)) {
-    return("Please specify maxshift as an integer value\n")
-  }
+  if(!is.numeric(maxshift))
+    stop("Please specify maxshift as an integer value")
 
   ## Figure out what kind of alignment we are doing -
 
@@ -11,10 +11,8 @@ VPdtw <- function(reference,query,penalty=0,maxshift=50,Reference.type=c("random
   ## no reference and a matrix of query vectors?
   ## something else = no implementation here
   
-  if(is.null(reference) & !is.matrix(query)) {
-    cat("Please specify a reference when passing a non-matrix query\n")
-    return("Exiting....\n")
-  }
+  if(is.null(reference) & !is.matrix(query))
+    stop("Please specify a reference when passing a non-matrix query")
   
   if(is.null(reference) & is.matrix(query)) {
 
@@ -22,7 +20,7 @@ VPdtw <- function(reference,query,penalty=0,maxshift=50,Reference.type=c("random
     ## median, mean or trimmed mean of the query matrix depending on
     ## the value of type as specified by the user.
     
-    type <- match.arg(Reference.type,c("random","median","mean","trimmed"))
+    type <- match.arg(Reference.type,c("random", "median", "mean", "trimmed"))
     ss <- sample(1:ncol(query),1)
     reference <- switch(type,
                         random = query[,ss],
@@ -32,12 +30,12 @@ VPdtw <- function(reference,query,penalty=0,maxshift=50,Reference.type=c("random
     reference <- na.omit(reference)
 
     ## if penalty is a number, then this means a constant penalty vector, create that vector
-    if(length(penalty)==1) penalty <- rep(penalty,length(reference))
+    if(length(penalty) ==1 )
+      penalty <- rep(penalty,length(reference))
 
     ## Check penalty vector length
-    if(length(penalty)<length(reference)) {
-      warning("Penalty vector should be at least of length ",length(reference)," but it has length ",length(penalty),"\n")
-      return("Exiting...\n")
+    if(length(penalty) < length(reference)) {
+      stop("Penalty vector should be at least of length ", length(reference)," but it has length ",length(penalty))
     }
 
     ## information used in summary at end - what kind of reference do
@@ -84,7 +82,8 @@ VPdtw <- function(reference,query,penalty=0,maxshift=50,Reference.type=c("random
     information <- paste(information,"Max allowed shift is ",maxshift,".\n",sep="")
     reference <- na.omit(reference)
 
-    if(length(penalty)==1) penalty <- rep(penalty,length(reference))
+    if(length(penalty)==1)
+      penalty <- rep(penalty,length(reference))
     
     result <- DoAlignment(query,reference,penalty,maxshift)
 
@@ -174,10 +173,6 @@ VPdtw <- function(reference,query,penalty=0,maxshift=50,Reference.type=c("random
       output$shift[seq(str,end,by=1),colName] <- result[[ii]][,4]
     }
 
-    ## matplot(output$xVals,output$warpedQuery,type="n",lty=1,col=c(2,3))
-    ## lines(output$xVals,output$reference,lwd=2,col=1)
-    ## matplot(output$xVals,output$warpedQuery,type="l",lty=1,col=c(2,3),add=TRUE)
-    
     class(output) <- "VPdtw"
 
     ## Summary Statistics for each query separately
@@ -262,10 +257,6 @@ VPdtw <- function(reference,query,penalty=0,maxshift=50,Reference.type=c("random
       colName <- paste("shift penalty",ii)
       output$shift[seq(str,end,by=1),colName] <- result[[ii]][,4]
     }
-
-    ## matplot(output$xVals,output$warpedQuery,type="n",lty=1,col=c(2,3))
-    ## lines(output$xVals,output$reference,lwd=2,col=1)
-    ## matplot(output$xVals,output$warpedQuery,type="l",lty=1,col=c(2,3),add=TRUE)
     class(output) <- "VPdtw"
 
     ## Summary Statistics for each query separately
@@ -292,9 +283,8 @@ VPdtw <- function(reference,query,penalty=0,maxshift=50,Reference.type=c("random
   }
 
   if(is.matrix(query) & is.matrix(penalty)) {
-    cat("Multiple queries and multiple penalties not yet implemented\n")
-    cat("Please create loops and call VPdtw as required\n")
-    return("Exiting....\n")
+    stop("Multiple queries and multiple penalties not yet implemented.
+         Please create loops and call VPdtw as needed.")
   }
 
   ## finished

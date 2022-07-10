@@ -53,10 +53,12 @@ lines(dref,col=2)
 BIN <- (volcano>177)
 dBIN <- t(apply(BIN,1,dilation,span=5))
 dBIN <- apply(dBIN,2,dilation,span=5)
+oldpar <- par(no.readonly = TRUE)
 par(mfrow=c(2,2))
 image(volcano)
 image(BIN)
 image(dBIN)
+par(oldpar)
 }
 
 \keyword{methods}

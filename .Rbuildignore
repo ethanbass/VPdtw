@@ -4,3 +4,4 @@
 ^\.gitignore$
 ^\.github$
 ^\.git$
+^CRAN-SUBMISSION$

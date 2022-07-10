@@ -55,7 +55,8 @@ signalMatchABand <- function(reference,query, lambda=rep(0.0,length(reference)),
 
   ## Should we warn when we get close to maxshift?
   shift <- xVals - xIndices
-  if(max(abs(shift),na.rm=TRUE)>(3*maxshift/4)) cat("Warning: Observed shift more than three quarters of maxshift\n")
+  if (max(abs(shift), na.rm=TRUE) > (3*maxshift/4))
+    warning("Observed shift more than three quarters of maxshift")
 
   ## Come up with a nice summary
   output <- matrix(NA,length(xVals),4)
@@ -68,8 +69,6 @@ signalMatchABand <- function(reference,query, lambda=rep(0.0,length(reference)),
   output[,"warped query"] <- query[xIndices]
   output[,"shift"] <- shift
 
-
-  ##cat(range(pp$path - 1:length(pp$path)),"\n")
   zz <- output
   return(invisible(zz))
 }
