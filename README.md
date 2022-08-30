@@ -1,4 +1,11 @@
 # Variable Penalty Dynamic Time Warping
+
+
+<!-- badges: start -->
+  [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/VPdtw)](https://cran.r-project.org/package=VPdtw)
+  [![metacran downloads](https://cranlogs.r-pkg.org/badges/grand-total/VPdtw)](https://cran.r-project.org/package=VPdtw)
+  <!-- badges: end -->
+  
 Variable Penalty Dynamic Time Warping for aligning GC-MS chromatograms to a master signal and more. With the appropriate penalty this method performs good alignment without altering the shape of peaks in GC-MS data.
 
 ## Installation
