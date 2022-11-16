@@ -1,9 +1,8 @@
 
-plot.VPdtw <- function(x, type=c("All", "Before", "After", "Shift"), xlim=NULL,
-                       ...)
-  {
+plot.VPdtw <- function(x, type=c("All", "Before", "After", "Shift", "Chromatograms"), xlim=NULL,
+                       ...){
     bgcol <- grey(0.9)
-    type <- match.arg(type,c("All","Before","After","Shift"))
+    type <- match.arg(type,c("All","Before","After","Shift", "Chromatograms"))
     
     oldpar <- par(no.readonly = TRUE)
     on.exit(par(oldpar))
@@ -11,14 +10,15 @@ plot.VPdtw <- function(x, type=c("All", "Before", "After", "Shift"), xlim=NULL,
                  All=par(mfrow=c(3,1)),
                  Before=par(mfrow=c(1,1)),
                  After=par(mfrow=c(1,1)),
-                 Shift=par(mfrow=c(1,1)))
+                 Shift=par(mfrow=c(1,1)),
+                 Chromatograms=par(mfrow=c(2,1)))
     
     if(is.null(xlim)) {
       xlim <- c(x$xVals[1],x$xVals[length(x$xVals)])
       ylim <- range(x$query,x$reference,na.rm=TRUE)
     } else {
       ind <- 1:length(x$reference)
-      ylim <- range(x$reference[which(ind>=xlim[1] & ind <= xlim[2])],na.rm=TRUE)
+      ylim <- range(x$reference[which(ind>=xlim[1] & ind <= xlim[2])], na.rm=TRUE)
       ind <- 1:length(x$query)
       wind <- which(ind>=xlim[1]-350 & ind <= xlim[2]+350)
       if(is.matrix(x$query)) {
@@ -26,7 +26,6 @@ plot.VPdtw <- function(x, type=c("All", "Before", "After", "Shift"), xlim=NULL,
       } else {
         ylim <- range(c(ylim,x$query[wind]),na.rm=TRUE)
       }
-      
     }
     
     if(type=="All" | type=="Before") {
@@ -71,12 +70,12 @@ plot.VPdtw <- function(x, type=c("All", "Before", "After", "Shift"), xlim=NULL,
       }
       if(is.vector(x$query) & is.matrix(x$penalty)) {
         ncols <- ncol(x$warpedQuery)
-        plot(xlim,ylim,type="n",xlab="Index",ylab="Intensity",
+        plot(xlim, ylim, type="n", xlab="Index", ylab="Intensity",
              main="Query and Reference after Alignment")
         lines(x$xVals,x$reference,lwd=2,col=1)
         matplot(x$xVals,x$warpedQuery,type="l",lty=1,add=TRUE,col=2:(ncols+1))
-        legend("topright",legend=c("Reference",paste("penalty  #",1:ncols,sep="")),
-               col=1:(ncols+1),lty=rep(1,ncols+1),lwd=c(2,rep(1,ncols)))
+        legend("topright", legend=c("Reference",paste("penalty  #",1:ncols,sep="")),
+               col=1:(ncols+1), lty=rep(1,ncols+1), lwd=c(2,rep(1,ncols)))
       }
     }
 
@@ -97,6 +96,14 @@ plot.VPdtw <- function(x, type=c("All", "Before", "After", "Shift"), xlim=NULL,
         abline(h=0,lty=2,col=grey(0.75))
         lines(x$xVals,x$shift)
       }
+    }
+    
+    if (type == "Chromatograms"){
+      matplot(x$query,type='l')
+      legend("topright", legend="query", bty = "n")
+      
+      matplot(x$warpedQuery ,type='l')
+      legend("topright", legend="VPdtw", bty = "n")
     }
     par(pp)
   }
