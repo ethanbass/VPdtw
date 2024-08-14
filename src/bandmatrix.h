@@ -39,7 +39,7 @@ class BMatrix : public TMatrix<Element> {
   // Local function to take care of indexing
   // Overloads the base class
   virtual int index(const int i,const int j) const {
-    int a = min(i,j), b = _bandwidth+1+j-i;
+    int a = vpdtw::min(i,j), b = _bandwidth+1+j-i;
     return(TMatrix<Element>::index(a,b));
   }
 

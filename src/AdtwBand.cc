@@ -2,9 +2,7 @@
 #include "bandmatrix.h"
 #include <float.h>
 
-using namespace std;
-
-static double Delta(double x, double y) { return(abs(x-y));}
+static double Delta(double x, double y) { return(vpdtw::abs(x-y));}
 
 void signalMatchABand(const Vector &master, 
 		      const Vector &signal, 
@@ -58,8 +56,8 @@ void signalMatchABand(const Vector &master,
 
   // i=1 
   i=1;
-  jmin = max(i-maxshift,2);
-  jmax = min(i+maxshift,ns);
+  jmin = vpdtw::max(i-maxshift,2);
+  jmax = vpdtw::min(i+maxshift,ns);
   
   for(j=jmin; j<=jmax; j++) {
     y(i,j) = Delta(master(i),signal(j));
@@ -73,8 +71,8 @@ void signalMatchABand(const Vector &master,
   //printf("Continuing with initiating cost\n");
 
   j = 1;
-  imin = max(j-maxshift,2);
-  imax = min(j+maxshift,nm);
+  imin = vpdtw::max(j-maxshift,2);
+  imax = vpdtw::min(j+maxshift,nm);
 
   for(i=imin; i<=imax; i++) {
     y(i,j) = Delta(master(i),signal(j));
@@ -84,8 +82,8 @@ void signalMatchABand(const Vector &master,
   // Now do dtw proper as we move away from leading edges of Sakoe-Chiba band
   //printf("Starting dtw process\n");
   j=2;
-  imin = max(j-maxshift,1);
-  imax = min(j+maxshift,nm);
+  imin = vpdtw::max(j-maxshift,1);
+  imax = vpdtw::min(j+maxshift,nm);
   for(i=imin; i<=imax; i++) {
     h0 = y(i-1,j) + lambda(i);
     h1 = y(i-1,j-1);
@@ -99,25 +97,25 @@ void signalMatchABand(const Vector &master,
   }
   //printf("Starting full asymmetric dtw process\n");
   for(j=3; j<=ns; j++) {
-    imin = max(j-maxshift,1);
-    imax = min(j+maxshift,nm);
+    imin = vpdtw::max(j-maxshift,1);
+    imax = vpdtw::min(j+maxshift,nm);
     for(i=imin; i<=imax; i++) {
       h0 = h1 = h2 = DBL_MAX;
       // Vertical step
-      if(abs(j-(i-1))<=maxshift) h0 = y(i-1,j) + lambda(i);
+      if(vpdtw::abs(j-(i-1))<=maxshift) h0 = y(i-1,j) + lambda(i);
       // Diagonal step
-      if(abs((j-1)-(i-1))<=maxshift) h1 = y(i-1,j-1); // always possible
+      if(vpdtw::abs((j-1)-(i-1))<=maxshift) h1 = y(i-1,j-1); // always possible
       // Super-diagonal step
       // Modified to add additional penalty for skipping over a point? Not in current version
 
       // version 1
-      //if(abs((j-2)-(i-1)) <= maxshift) h2 = y(i-1,j-2) + lambda(i) + Delta(master(i),signal(j-1));  
+      //if(vpdtw::abs((j-2)-(i-1)) <= maxshift) h2 = y(i-1,j-2) + lambda(i) + Delta(master(i),signal(j-1));  
 
       // more like linear interpolation as we are aligning s(j-1) to average of master_i-1 and master_i
-      //if(abs((j-2)-(i-1)) <= maxshift) h2 = y(i-1,j-2) + lambda(i) + 0.5*Delta(0.5*(master(i-1)+master(i)),signal(j-1)); 
+      //if(vpdtw::abs((j-2)-(i-1)) <= maxshift) h2 = y(i-1,j-2) + lambda(i) + 0.5*Delta(0.5*(master(i-1)+master(i)),signal(j-1)); 
 
       //Double penalty for dropping a term as a compromise of the above
-      if(abs((j-2)-(i-1)) <= maxshift) h2 = y(i-1,j-2) + lambda(i) * 2; 
+      if(vpdtw::abs((j-2)-(i-1)) <= maxshift) h2 = y(i-1,j-2) + lambda(i) * 2; 
       
       if(h0<h1 && h0<h2) {
 	y(i,j) = Delta(master(i),signal(j)) + h0;
@@ -138,8 +136,8 @@ void signalMatchABand(const Vector &master,
   
   //printf("Starting backward pass along one edge\n");
   i = nm;
-  jmin = max(i-maxshift,1);
-  jmax = min(i+maxshift,ns);
+  jmin = vpdtw::max(i-maxshift,1);
+  jmax = vpdtw::min(i+maxshift,ns);
   ymin = y(i,jmin);
   ibest = i;
   jbest = jmin;
@@ -152,8 +150,8 @@ void signalMatchABand(const Vector &master,
   
   //printf("Starting backward pass along other edge\n");
   j = ns;
-  imin = max(j-maxshift,1);
-  imax = min(j+maxshift,nm);
+  imin = vpdtw::max(j-maxshift,1);
+  imax = vpdtw::min(j+maxshift,nm);
   for(i=imin; i<=imax; i++) {
     if(y(i,j) < ymin) {
       ymin = y(i,j);
