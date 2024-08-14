@@ -1,8 +1,8 @@
 Package: VPdtw
 Type: Package
 Title: Variable Penalty Dynamic Time Warping
-Version: 2.2.0
-Date: 2022-11-16
+Version: 2.2.1
+Date: 2024-08-14
 Authors@R: c(person("David", "Clifford", , email="David.Clifford+CRAN@gmail.com", role = c("aut")),
            person("Glenn", "Stone", role = c("aut")),
            person("Ethan", "Bass", email = "ethanbass@gmail.com", role = c("ctb", "cre"), comment = c(ORCID = "0000-0002-6175-6739"))
@@ -11,4 +11,8 @@ Description: Variable Penalty Dynamic Time Warping (VPdtw) for aligning chromato
 License: GPL-2
 URL: https://github.com/ethanbass/VPdtw/
 BugReports: https://github.com/ethanbass/VPdtw/issues
-
+RoxygenNote: 7.3.0
+Encoding: UTF-8
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
