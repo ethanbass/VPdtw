@@ -11,6 +11,10 @@
 
 \item{...}{Additional argument.}
 }
+\value{
+Numeric vector from the \code{summary} slot in the \code{VPdtw}
+object specified by \code{x}.
+}
 \description{
 Print VPdtw
 }

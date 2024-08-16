@@ -5,6 +5,13 @@
 #' @param type What to plot.
 #' @param xlim Numeric vector specifying x-axis limits.
 #' @param ... Additional arguments
+#' @return No return value, called for side effects.
+#' @section Side effects:
+#' Plots information about alignment according to value of \code{type}: either
+#' unaligned query and reference (\code{"Before"}), aligned query and reference
+#' \code{"After"}, shift at each index \code{"Shift"}, a three-panel plot
+#' containing all three of these options \code{"All}, or a two-panel plot with
+#' unaligned and aligned query \code{"Chromatograms"}.
 #' @export
 
 plot.VPdtw <- function(x, type = c("All", "Before", "After", 
