@@ -56,7 +56,7 @@
 #' @seealso Also check out the \code{dtw} package by Toni Giorgino which
 #' covers many variations of dynamic time warping.
 #' @references Alignment Using Variable Penalty Dynamic Time Warping by
-#' CLIFFORD, D; STONE, G; MONTOLIU, I; et al. ANALYTICAL CHEMISTRY Volume: 81
+#' Clifford, D; Stone, G; Montoliu, I; et al. Analytical Chemistry Volume: 81
 #' Issue: 3 Pages: 1000-1007 Published: 2009
 #' @keywords methods
 #' @examples

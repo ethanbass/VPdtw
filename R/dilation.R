@@ -15,9 +15,9 @@
 #' We recommend using a dilation to form a \code{penalty} for use in
 #' \code{VPdtw}.
 #' 
-#' @param y Signal, a numeric vector
+#' @param y Signal (as a numeric vector).
 #' @param span An integer specifying the width of the moving window.
-#' @return \item{res}{Dilation of y with width span}
+#' @return \item{res}{Dilation of y with width specified by \code{span}}
 #' @author David Clifford
 #' @references Soille, P. Morphological Image Analysis: Principles and
 #' Applications; Springer: New York, 1999.
@@ -27,13 +27,13 @@
 #' ## Example 1 - dilation of a signal
 #' data(reference)
 #' dref <- dilation(reference, 150)
-#' plot(reference, log="y", type="l")
-#' lines(dref, col=2)
+#' plot(reference, log = "y", type = "l")
+#' lines(dref, col = 2)
 #' 
 #' ## Example 2 - dilation of an image
 #' BIN <- (volcano > 177)
-#' dBIN <- t(apply(BIN, 1, dilation, span=5))
-#' dBIN <- apply(dBIN, 2, dilation, span=5)
+#' dBIN <- t(apply(BIN, 1, dilation, span = 5))
+#' dBIN <- apply(dBIN, 2, dilation, span = 5)
 #' oldpar <- par(no.readonly = TRUE)
 #' par(mfrow=c(2, 2))
 #' image(volcano)
