@@ -112,11 +112,10 @@ plot.VPdtw <- function(x, type = c("All", "Before", "After",
     }
     
     if (type == "Chromatograms"){
-      matplot(x$query,type='l')
-      legend("topright", legend="query", bty = "n")
-      
-      matplot(x$warpedQuery, type = 'l')
-      legend("topright", legend = "VPdtw", bty = "n")
+      matplot(y = x$query, type = 'l',
+              ylab = "query", xlab = "index")
+      matplot(y = x$warpedQuery, type = 'l',
+              ylab = "warped", xlab = "index")
     }
     par(pp)
   }

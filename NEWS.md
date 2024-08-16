@@ -2,6 +2,7 @@
 
 * Fixed issue with std namespace declaration in header to fix R CMD CHECK warning.
 * Roxygenized documentation.
+* Added basic tests.
 
 # VPdtw 2.2.0
 

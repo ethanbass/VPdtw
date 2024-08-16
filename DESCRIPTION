@@ -14,5 +14,6 @@ BugReports: https://github.com/ethanbass/VPdtw/issues
 RoxygenNote: 7.3.0
 Encoding: UTF-8
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    vdiffr
 Config/testthat/edition: 3
