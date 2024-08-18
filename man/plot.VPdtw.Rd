@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.VPdtw.R
 \name{plot.VPdtw}
 \alias{plot.VPdtw}
-\title{Plot VPdtw}
+\title{Plot VPdtw object}
 \usage{
 \method{plot}{VPdtw}(
   x,
@@ -24,14 +24,14 @@
 No return value, called for side effects.
 }
 \description{
-Plot VPdtw
+Plot VPdtw object
 }
 \section{Side effects}{
 
 Plots information about alignment according to value of \code{type}: either
 unaligned query and reference (\code{"Before"}), aligned query and reference
-\code{"After"}, shift at each index \code{"Shift"}, a three-panel plot
-containing all three of these options \code{"All}, or a two-panel plot with
-unaligned and aligned query \code{"Chromatograms"}.
+(\code{"After"}), shift at each index (\code{"Shift"}), a three-panel plot
+containing all three of these options (\code{"All"}), or a two-panel plot with
+unaligned and aligned query (\code{"Chromatograms"}).
 }
 
