@@ -42,9 +42,9 @@ signalMatchABand <- function(reference, query,
   maxp <- max(path, na.rm = TRUE)
 
   xIndices <- path
-  xVals <- 1:length(path)
+  xVals <- seq_len(length(path))
   if (minp > 1) {
-    xIndices <- c(1:(minp - 1), xIndices)
+    xIndices <- c(seq_len(minp - 1), xIndices)
     xVals <- c(seq(to = 0, len = minp - 1, by = 1), xVals)
   }
   if(maxp < length(query)) {
@@ -54,7 +54,7 @@ signalMatchABand <- function(reference, query,
   }
 
   if (FALSE) {
-    plot(reference, type="l", lwd=2, xlim = c(1-maxshift, nr + maxshift))
+    plot(reference, type = "l", lwd = 2, xlim = c(1 - maxshift, nr + maxshift))
     lines(which(!is.na(path)), query[na.omit(path)], col = 2)
     lines(xVals, query[xIndices], col = 3, lty = 2)
   }

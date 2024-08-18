@@ -43,7 +43,7 @@
 #' 
 #' @export dilation
 
-dilation <- function(y,span){
+dilation <- function(y, span){
   y <- na.omit(y)
   nmes <- names(y)
   res <- .C("dilation",

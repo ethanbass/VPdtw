@@ -140,8 +140,8 @@
 #' 
 #' @export VPdtw
 
-VPdtw <- function(reference, query, penalty=0, maxshift=50,
-                  Reference.type=c("random", "median", "mean", "trimmed")) {
+VPdtw <- function(reference, query, penalty = 0, maxshift = 50,
+                  Reference.type = c("random", "median", "mean", "trimmed")) {
 
   ## We assume Sakoe Chiba DTW to allow for faster computation times
   if(!is.numeric(maxshift))
@@ -163,7 +163,7 @@ VPdtw <- function(reference, query, penalty=0, maxshift=50,
     ## the value of type as specified by the user.
     
     type <- match.arg(Reference.type, c("random", "median", "mean", "trimmed"))
-    ss <- sample(1:ncol(query), 1)
+    ss <- sample(seq_len(ncol(query)), 1)
     reference <- switch(type,
                         random = query[,ss],
                         median = apply(query, 1, median, na.rm = TRUE),
@@ -221,12 +221,12 @@ VPdtw <- function(reference, query, penalty=0, maxshift=50,
   if(is.vector(reference) & is.vector(query) & is.vector(penalty)) {
     information <- "Reference is supplied by the user.\n"
     information <- paste(information, "Query vector is of length ",
-                         length(query), ".\n", sep="")
+                         length(query), ".\n", sep = "")
 
     information <- paste(information,
-                         "Single Penalty vector supplied by user.\n", sep="")
+                         "Single Penalty vector supplied by user.\n", sep = "")
     information <- paste(information, "Max allowed shift is ",
-                         maxshift, ".\n", sep="")
+                         maxshift, ".\n", sep = "")
     reference <- na.omit(reference)
 
     if(length(penalty) == 1)
@@ -296,7 +296,8 @@ VPdtw <- function(reference, query, penalty=0, maxshift=50,
     ## result is now a list of length ncol(penalty) each part is a matrix
 
     xlim <- NULL
-    for(ii in 1:length(result)) xlim <- c(xlim, range(result[[ii]][,1]))
+    for(ii in seq_len(length(result)))
+      xlim <- c(xlim, range(result[[ii]][,1]))
     xlim <- range(xlim)
 
     xVals <- seq(xlim[1], xlim[2], by = 1)
@@ -316,18 +317,18 @@ VPdtw <- function(reference, query, penalty=0, maxshift=50,
     output$penalty <- penalty
     
     output$warpedQuery <- matrix(NA, length(xVals), ncol(query))
-    colnames(output$warpedQuery) <- paste("warped query", 1:ncol(query))
+    colnames(output$warpedQuery) <- paste("warped query", seq_len(ncol(query)))
 
     output$shift <- matrix(NA, length(xVals), ncol(query))
-    colnames(output$shift) <- paste("shift", 1:ncol(query))
+    colnames(output$shift) <- paste("shift", seq_len(ncol(query)))
     
-    for(ii in 1:ncol(query)) {
-      colName <- paste("warped query",ii)
-      str <- which(xVals == result[[ii]][1, 1])
+    for(ii in seq_len(ncol(query))) {
+      colName <- paste("warped query", ii)
+      str <- which(xVals == result[[ii]][1,1])
       end <- which(xVals == result[[ii]][nrow(result[[ii]]), 1])
-      output$warpedQuery[seq(str, end, by = 1), colName] <- result[[ii]][, 3]
+      output$warpedQuery[seq(str, end, by = 1), colName] <- result[[ii]][,3]
       colName <- paste("shift",ii)
-      output$shift[seq(str, end, by = 1), colName] <- result[[ii]][, 4]
+      output$shift[seq(str, end, by = 1), colName] <- result[[ii]][,4]
     }
 
     class(output) <- "VPdtw"
@@ -337,8 +338,8 @@ VPdtw <- function(reference, query, penalty=0, maxshift=50,
     cost2 <- function(x,ii) {
       ret <- c(sum(abs(x$warpedQuery[,ii] - x$reference),
                    na.rm = TRUE) +
-               sum(x$penalty[x$xVals[which(diff(x$shift[,ii])==1)+1]],
-                   na.rm=TRUE) +
+               sum(x$penalty[x$xVals[which(diff(x$shift[,ii]) == 1) + 1]],
+                   na.rm = TRUE) +
                2*sum(x$penalty[x$xVals[which(diff(x$shift[,ii]) == -1) + 1]],
                      na.rm = TRUE),
                sum(!is.na(x$warpedQuery[,ii] * x$reference), na.rm = TRUE),
@@ -347,20 +348,24 @@ VPdtw <- function(reference, query, penalty=0, maxshift=50,
                sum(diff(x$shift[,ii]) == 1, na.rm = TRUE),
                  sum(diff(x$shift[,ii]) == -1, na.rm = TRUE))
       names(ret) <- c("Cost", "Overlap", "Max Obs Shift", "# Diag Moves",
-                      "# Expanded","# Dropped")
+                      "# Expanded", "# Dropped")
       ret
     }
     
     output$summary <- NULL
-    for(ii in 1:ncol(output$warpedQuery)) output$summary <- rbind(output$summary,cost2(output,ii))
-    rownames(output$summary) <- paste("Query #",1:ncol(output$warpedQuery),":",sep="")
+    for(ii in seq_len(ncol(output$warpedQuery))){
+      output$summary <- rbind(output$summary, cost2(output,ii))
+    }
+    rownames(output$summary) <- paste("Query #",
+                                      seq_len(ncol(output$warpedQuery)),
+                                      ":", sep = "")
     output$information <- information
         
     return(invisible(output))
   }
 
   ## For doing alignment for many different penalties
-  DoAlignmentP <- function(penalty,query,reference,maxshift) {
+  DoAlignmentP <- function(penalty, query, reference, maxshift) {
     ## Drop NAs
     reference <- na.omit(reference)
     query <- na.omit(query)
@@ -372,16 +377,17 @@ VPdtw <- function(reference, query, penalty=0, maxshift=50,
   }
 
   ## Scenario 3: vector query and penalty matrix
-  if(is.vector(query) & is.matrix(penalty)) {
+  if(is.vector(query) & is.matrix(penalty)){
 
     information <- paste(information, "Query vector of length ",
-                         length(query), ".\n", sep="")
+                         length(query), ".\n", sep = "")
     
-    information <- paste(information,"Penalty matrix made up of ",
-                         ncol(penalty)," penalties supplied by user.\n",sep="")
+    information <- paste(information, "Penalty matrix made up of ",
+                         ncol(penalty), " penalties supplied by user.\n",
+                         sep = "")
 
-    information <- paste(information,"Max allowed shift is ", maxshift, 
-                         ".\n", sep="")
+    information <- paste(information, "Max allowed shift is ", maxshift, 
+                         ".\n", sep = "")
     reference <- na.omit(reference)
     ## Align query to reference using each of the penalties separately
     penaltyL <- as.list(as.data.frame(penalty)) ## to ensure I get a list in the next round, can't apply to matrix
@@ -390,61 +396,67 @@ VPdtw <- function(reference, query, penalty=0, maxshift=50,
     ## result is now a list of length ncol(penalty) each part is a matrix
 
     xlim <- NULL
-    for(ii in 1:length(result)) xlim <- c(xlim,range(result[[ii]][,1]))
+    for(ii in seq_len(length(result)))
+      xlim <- c(xlim, range(result[[ii]][,1]))
     xlim <- range(xlim)
 
     xVals <- seq(xlim[1], xlim[2], by=1)
 
     output <- vector("list", 6)
-    names(output) <- c("xVals","reference","query","penalty","warpedQuery","shift")
+    names(output) <- c("xVals", "reference", "query",
+                       "penalty", "warpedQuery", "shift")
     
     output$xVals <- xVals
     
-    str <- which(xVals==1)
-    end <- which(xVals==length(reference))
-    output$reference <- rep(NA,length(xVals))
-    output$reference[seq(str,end,by=1)] <- reference
+    str <- which(xVals == 1)
+    end <- which(xVals == length(reference))
+    output$reference <- rep(NA, length(xVals))
+    output$reference[seq(str, end, by = 1)] <- reference
 
     output$query <- query
     output$penalty <- penalty
     
-    output$warpedQuery <- matrix(NA,length(xVals),ncol(penalty))
-    colnames(output$warpedQuery) <- paste("warped query penalty",1:ncol(penalty))
+    output$warpedQuery <- matrix(NA, length(xVals), ncol(penalty))
+    colnames(output$warpedQuery) <- paste("warped query penalty", seq_len(ncol(penalty)))
 
-    output$shift <- matrix(NA,length(xVals),ncol(penalty))
-    colnames(output$shift) <- paste("shift penalty",1:ncol(penalty))
+    output$shift <- matrix(NA, length(xVals), ncol(penalty))
+    colnames(output$shift) <- paste("shift penalty", seq_len(ncol(penalty)))
     
-    for(ii in 1:ncol(penalty)) {
-      colName <- paste("warped query penalty",ii)
+    for(ii in seq_len(ncol(penalty))) {
+      colName <- paste("warped query penalty", ii)
       str <- which(xVals == result[[ii]][1,1])
-      end <- which(xVals == result[[ii]][nrow(result[[ii]]),1])
+      end <- which(xVals == result[[ii]][nrow(result[[ii]]), 1])
       output$warpedQuery[seq(str, end, by=1), colName] <- result[[ii]][,3]
       colName <- paste("shift penalty", ii)
-      output$shift[seq(str, end, by=1), colName] <- result[[ii]][,4]
+      output$shift[seq(str, end, by = 1), colName] <- result[[ii]][,4]
     }
     class(output) <- "VPdtw"
 
     ## Summary Statistics for each query separately
     
     cost3 <- function(x,ii) {
-      ret <- c(sum(abs(x$warpedQuery[,ii] - x$reference), na.rm=TRUE) +
+      ret <- c(sum(abs(x$warpedQuery[,ii] - x$reference), na.rm = TRUE) +
                sum(x$penalty[,ii][x$xVals[which(diff(x$shift[,ii]) == 1) + 1]],
-                   na.rm=TRUE) +
+                   na.rm = TRUE) +
                2*sum(x$penalty[,ii][x$xVals[which(diff(x$shift[,ii]) == -1) + 1]],
-                     na.rm=TRUE),
-               sum(!is.na(x$warpedQuery[,ii] * x$reference), na.rm=TRUE),
-               max(abs(x$shift[,ii]), na.rm=TRUE),
-               sum(diff(x$shift[,ii]) == 0, na.rm=TRUE)+1,
-               sum(diff(x$shift[,ii]) == 1, na.rm=TRUE),
-               sum(diff(x$shift[,ii]) == -1, na.rm=TRUE))
+                     na.rm = TRUE),
+               sum(!is.na(x$warpedQuery[,ii] * x$reference), na.rm = TRUE),
+               max(abs(x$shift[,ii]), na.rm = TRUE),
+               sum(diff(x$shift[,ii]) == 0, na.rm = TRUE) + 1,
+               sum(diff(x$shift[,ii]) == 1, na.rm = TRUE),
+               sum(diff(x$shift[,ii]) == -1, na.rm = TRUE))
       names(ret) <- c("Cost", "Overlap", "Max Obs Shift", 
                       "# Diag Moves", "# Expanded","# Dropped")
       ret
     }
     
     output$summary <- NULL
-    for(ii in 1:ncol(output$warpedQuery)) output$summary <- rbind(output$summary,cost3(output,ii))
-    rownames(output$summary) <- paste("Penalty #", 1:ncol(output$warpedQuery), ":", sep="")
+    for(ii in seq_len(ncol(output$warpedQuery))){
+      output$summary <- rbind(output$summary, cost3(output, ii))
+    } 
+    rownames(output$summary) <- paste("Penalty #", 
+                                      seq_len(ncol(output$warpedQuery)), ":", 
+                                      sep = "")
     output$information <- information
     
     return(invisible(output))

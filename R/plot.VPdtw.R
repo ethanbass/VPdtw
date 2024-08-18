@@ -90,7 +90,8 @@ plot.VPdtw <- function(x, type = c("All", "Before", "After",
         plot(xlim, ylim, type = "n", xlab = "Index", ylab = "Intensity",
              main = "Query and Reference after Alignment")
         lines(x$xVals, x$reference, lwd = 2, col = 1)
-        matplot(x$xVals, x$warpedQuery, type = "l", lty = 1, add = TRUE, col = 2:(ncols+1))
+        matplot(x$xVals, x$warpedQuery, type = "l", lty = 1, add = TRUE,
+                col = (seq_len(ncols)+1))
         legend("topright", legend = c("Reference",
                                       paste("penalty  #", seq_len(ncols),
                                             sep = "")),
@@ -104,13 +105,14 @@ plot.VPdtw <- function(x, type = c("All", "Before", "After",
         ncols <- ncol(x$shift)
 
         matplot(x$xVals, x$shift, type="l", lty=1, xlab = "Index", ylab = "Shift",
-                main = "Shifts required for Alignment", col = 2:(ncols+1), xlim = xlim)
+                main = "Shifts required for Alignment", col = seq_len(ncols)+1,
+                xlim = xlim)
         if (is.matrix(x$penalty))
           legend("topleft", legend = paste("penalty  #", seq_len(ncols), sep = ""),
-                 col=2:(ncols+1), lty = rep(1, ncols))
+                 col = seq_len(ncols)+1, lty = rep(1, ncols))
         if (is.matrix(x$query))
           legend("topleft", legend = paste("query  #", seq_len(ncols), sep = ""),
-                 col=2:(ncols+1), lty = rep(1, ncols))
+                 col = seq_len(ncols)+1, lty = rep(1, ncols))
         abline(h = 0, lty = 2, col = grey(0.75))
       }
       if(is.vector(x$shift)) {
