@@ -1,6 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^cran-comments\.md$
+^\.DS_Store$
 ^\.gitignore$
 ^\.github$
 ^\.git$
