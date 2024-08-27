@@ -35,3 +35,13 @@ containing all three of these options (\code{"All"}), or a two-panel plot with
 unaligned and aligned query (\code{"Chromatograms"}).
 }
 
+\examples{
+
+  query <- c(1,5,4,3,9,8,5,2,6,5,4)
+  reference <- c(rnorm(5), query, rnorm(5))
+  lambda <- rep(0, length(reference))
+  maxshift <- 11
+  res <- VPdtw(reference, query, lambda, maxshift)
+  plot(res)
+  
+}

@@ -18,3 +18,12 @@ object specified by \code{x}.
 \description{
 Print VPdtw
 }
+\examples{
+query <- c(1,5,4,3,9,8,5,2,6,5,4)
+reference <- c(rnorm(5), query, rnorm(5))
+lambda <- rep(0, length(reference))
+maxshift <- 11
+res <- VPdtw(reference, query, lambda, maxshift)
+print(res)
+
+}

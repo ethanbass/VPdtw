@@ -475,7 +475,16 @@ VPdtw <- function(reference, query, penalty = 0, maxshift = 50,
 #' @param ... Additional argument.
 #' @return Numeric vector from the \code{summary} slot in the \code{VPdtw}
 #' object specified by \code{x}. 
+#' @examples
+#' query <- c(1,5,4,3,9,8,5,2,6,5,4)
+#' reference <- c(rnorm(5), query, rnorm(5))
+#' lambda <- rep(0, length(reference))
+#' maxshift <- 11
+#' res <- VPdtw(reference, query, lambda, maxshift)
+#' print(res)
+#' 
 #' @export
+
 print.VPdtw <- function(x,...) {
   cat(x$information)
   cat("\n")
