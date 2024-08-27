@@ -2,7 +2,7 @@ Package: VPdtw
 Type: Package
 Title: Variable Penalty Dynamic Time Warping
 Version: 2.2.1
-Date: 2024-08-14
+Date: 2024-08-27
 Authors@R: c(person("David", "Clifford", , email="David.Clifford+CRAN@gmail.com", role = c("aut")),
            person("Glenn", "Stone", role = c("aut")),
            person("Ethan", "Bass", email = "ethanbass@gmail.com", role = c("ctb", "cre"), comment = c(ORCID = "0000-0002-6175-6739"))

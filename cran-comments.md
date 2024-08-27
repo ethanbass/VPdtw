@@ -10,6 +10,7 @@ This submission is a patch for the clang compiler warning pointed out by Profess
 
 - Mac OS 12.6.8 (local machine, R 4.3.3)
 - win-builder (release)
+- win-builder (dev)
 - linux (latest, rhub)
 - macos (latest, rhub)
 - macos-arm64 (latest, rhub)
