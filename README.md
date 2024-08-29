@@ -11,7 +11,13 @@
 Variable Penalty Dynamic Time Warping for aligning GC-MS chromatograms to a master signal and more. With the appropriate penalty this method performs good alignment without altering the shape of peaks in chromatography data.
 
 ## Installation
-The package can be installed from GitHub:
+The package can be installed from CRAN:
+
+```
+install.packages("VPdtw")
+```
+
+Alternatively, the development version can be installed from GitHub:
 
 ```R
 install.packages("remotes")
