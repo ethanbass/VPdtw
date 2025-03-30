@@ -3,6 +3,7 @@
 
 <!-- badges: start -->
   [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/VPdtw)](https://cran.r-project.org/package=VPdtw)
+  [![chromConverter status badge](https://ethanbass.r-universe.dev/badges/VPdtw)](https://ethanbass.r-universe.dev)
   [![metacran downloads](https://cranlogs.r-pkg.org/badges/grand-total/VPdtw)](https://cran.r-project.org/package=VPdtw)
   [![metacran downloads](https://cranlogs.r-pkg.org/badges/last-month/VPdtw)](https://cran.r-project.org/package=VPdtw)
 
